@@ -1,4 +1,4 @@
-# Local Git Setup for Umbraco-as-a-Service
+# Local Git repository setup for Umbraco-as-a-Service
 
 A command-line utility to set-up a local git repository for an Umbraco-as-a-Service project.
 
