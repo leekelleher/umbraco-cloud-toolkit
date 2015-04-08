@@ -39,6 +39,10 @@ namespace UaasGitSetup
 			if (string.IsNullOrWhiteSpace(password))
 				Environment.Exit(EXITCODE_ERROR);
 
+			var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), projectName);
+			if (!Directory.Exists(workingDirectory))
+				Directory.CreateDirectory(workingDirectory);
+
 			var environments = new Dictionary<string, string>()
 			{
 				{ "dev", "dev-" },
@@ -46,12 +50,8 @@ namespace UaasGitSetup
 				{ "live", "" }
 			};
 			var format = "https://{0}{1}.scm.umbraco.io/scm/info";
-
 			var serializer = new JavaScriptSerializer();
-			var workingDirectory = Path.Combine(Directory.GetCurrentDirectory(), projectName);
 
-			if (!Directory.Exists(workingDirectory))
-				Directory.CreateDirectory(workingDirectory);
 			Console.WriteLine();
 			Console.WriteLine("Discovering SCM info for environments...");
 			Console.WriteLine();
