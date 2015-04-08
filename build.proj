@@ -15,7 +15,7 @@
 	<PropertyGroup>
 		<VersionMajor>0</VersionMajor>
 		<VersionMinor>1</VersionMinor>
-		<VersionPatch>0</VersionPatch>
+		<VersionPatch>1</VersionPatch>
 		<VersionSuffix></VersionSuffix>
 	</PropertyGroup>
 
@@ -27,14 +27,9 @@
 
 	<!-- UPDATE ASSEMBLEY VERSION -->
 	<Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
-		<Version Major="$(VersionMajor)" Minor="$(VersionMinor)" BuildType="Automatic" RevisionType="Automatic" StartDate="2014-04-28">
-			<Output TaskParameter="Build" PropertyName="Build" />
-			<Output TaskParameter="Revision" PropertyName="Revision" />
-		</Version>
 		<AssemblyInfo CodeLanguage="CS"
 			OutputFile="$(RootDir)\src\VersionInfo.cs"
-			AssemblyVersion="$(VersionMajor).$(VersionMinor).0.0"
-			AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(Build).$(Revision)"
+			AssemblyVersion="$(VersionMajor).$(VersionMinor).*"
 			AssemblyInformationalVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionSuffix)"/>
 	</Target>
 
