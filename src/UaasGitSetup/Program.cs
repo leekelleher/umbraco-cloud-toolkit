@@ -52,12 +52,18 @@ namespace UaasGitSetup
 
 			if (!Directory.Exists(workingDirectory))
 				Directory.CreateDirectory(workingDirectory);
+			Console.WriteLine();
+			Console.WriteLine("Discovering SCM info for environments...");
+			Console.WriteLine();
 
 			foreach (var environment in environments)
 			{
 				using (var client = new WebClient() { Credentials = new NetworkCredential(username, password) })
 				{
 					var url = string.Format(format, environment.Value, projectName);
+
+					Console.WriteLine("Downloading SCM info for '{0}' environment...", environment.Key);
+
 					var response = client.DownloadString(url);
 
 					if (!string.IsNullOrWhiteSpace(response))
@@ -69,6 +75,9 @@ namespace UaasGitSetup
 							if (environment.Key == "dev")
 							{
 								git(workingDirectory, "clone {0} {1}", scmInfo.GitUrl, ".");
+								Console.WriteLine("Cloning Git repo for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
+
+								Console.WriteLine("Swapping Git repo 'origin' with '{0}' remote", environment.Key);
 								git(workingDirectory, "remote rename {0} {1}", "origin", environment.Key);
 
 								success = true;
@@ -76,13 +85,22 @@ namespace UaasGitSetup
 							}
 
 							git(workingDirectory, "remote add {0} {1}", environment.Key, scmInfo.GitUrl);
+							Console.WriteLine("Adding Git repo remote for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
 						}
 					}
 				}
+
+				Console.WriteLine();
 			}
 
+			Console.WriteLine("Cloned Git repo success? {0}", success);
+
 			if (success)
+			{
+				Console.WriteLine("Fetching latest commits from all Git repo environments");
 				git(workingDirectory, "fetch {0}", "--all");
+			}
+
 
 			// Console.Read();
 		}
