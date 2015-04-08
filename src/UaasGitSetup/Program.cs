@@ -56,6 +56,8 @@ namespace UaasGitSetup
 			Console.WriteLine("Discovering SCM info for environments...");
 			Console.WriteLine();
 
+			var tmpGitUrls = new Dictionary<string, string>();
+
 			foreach (var environment in environments)
 			{
 				using (var client = new WebClient() { Credentials = new NetworkCredential(username, password) })
@@ -72,6 +74,8 @@ namespace UaasGitSetup
 
 						if (scmInfo != null)
 						{
+							tmpGitUrls.Add(environment.Key, scmInfo.GitUrl);
+
 							if (environment.Key == "dev")
 							{
 								git(workingDirectory, "clone {0} {1}", scmInfo.GitUrl, ".");
@@ -101,6 +105,11 @@ namespace UaasGitSetup
 				git(workingDirectory, "fetch {0}", "--all");
 			}
 
+			foreach (var tmpGitUrl in tmpGitUrls)
+			{
+				Console.WriteLine("Updating Git repo remote URL for '{0}'", tmpGitUrl.Key);
+				git(workingDirectory, "remote set-url {0} {1}", tmpGitUrl.Key, tmpGitUrl.Value);
+			}
 
 			// Console.Read();
 		}
