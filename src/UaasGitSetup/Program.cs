@@ -51,6 +51,7 @@ namespace UaasGitSetup
 			};
 			var format = "https://{0}{1}.scm.umbraco.io/scm/info";
 			var serializer = new JavaScriptSerializer();
+			var usernameEscaped = username.Replace("@", "%40");
 
 			Console.WriteLine();
 			Console.WriteLine("Discovering SCM info for environments...");
@@ -76,10 +77,17 @@ namespace UaasGitSetup
 						{
 							tmpGitUrls.Add(environment.Key, scmInfo.GitUrl);
 
+							var uri = new UriBuilder(scmInfo.GitUrl)
+							{
+								UserName = usernameEscaped,
+								Password = password
+							};
+							var gitUrl = uri.Uri.ToString();
+
 							if (environment.Key == "dev")
 							{
-								git(workingDirectory, "clone {0} {1}", scmInfo.GitUrl, ".");
 								Console.WriteLine("Cloning Git repo for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
+								git(workingDirectory, "clone {0} {1}", gitUrl, ".");
 
 								Console.WriteLine("Swapping Git repo 'origin' with '{0}' remote", environment.Key);
 								git(workingDirectory, "remote rename {0} {1}", "origin", environment.Key);
@@ -88,8 +96,8 @@ namespace UaasGitSetup
 								continue;
 							}
 
-							git(workingDirectory, "remote add {0} {1}", environment.Key, scmInfo.GitUrl);
 							Console.WriteLine("Adding Git repo remote for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
+							git(workingDirectory, "remote add {0} {1}", environment.Key, gitUrl);
 						}
 					}
 				}
