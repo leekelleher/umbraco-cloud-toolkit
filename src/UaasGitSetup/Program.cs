@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -164,9 +163,9 @@ namespace UaasGitSetup
 			var stdout = p.StandardOutput.ReadToEnd();
 
 			// TODO: [LK] Add a verbose option?
-			System.Console.ForegroundColor = ConsoleColor.DarkYellow;
-			System.Console.WriteLine(stdout);
-			System.Console.ResetColor();
+			Console.ForegroundColor = ConsoleColor.DarkYellow;
+			Console.WriteLine(stdout);
+			Console.ResetColor();
 
 			p.WaitForExit();
 		}
