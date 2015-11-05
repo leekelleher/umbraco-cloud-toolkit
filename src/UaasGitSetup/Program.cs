@@ -50,12 +50,8 @@ namespace UaasGitSetup
 				{ "stage", "stage-" },
 				{ "live", "" }
 			};
-			
-			var format = "https://{0}{1}.scm.umbraco.io/scm/info";
 
-			// HACK: To workaround cloning from the new UaaS stamp [LK:2015-05-25]
-			if (args.Contains("s1"))
-				format = format.Replace(".umbraco.io", ".s1.umbraco.io");
+			var format = "https://{0}{1}.scm.s1.umbraco.io/scm/info";
 
 			var serializer = new JavaScriptSerializer();
 			var usernameEscaped = username.Replace("@", "%40");
