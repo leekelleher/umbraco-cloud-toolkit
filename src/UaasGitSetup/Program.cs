@@ -64,45 +64,55 @@ namespace UaasGitSetup
 
 			foreach (var environment in environments)
 			{
-				using (var client = new WebClient() { Credentials = new NetworkCredential(username, password) })
+				try
 				{
-					var url = string.Format(format, environment.Value, projectName);
-
-					Console.WriteLine("Downloading SCM info for '{0}' environment...", environment.Key);
-
-					var response = client.DownloadString(url);
-
-					if (!string.IsNullOrWhiteSpace(response))
+					using (var client = new WebClient() { Credentials = new NetworkCredential(username, password) })
 					{
-						var scmInfo = serializer.Deserialize<ScmInfo>(response);
+						var url = string.Format(format, environment.Value, projectName);
 
-						if (scmInfo != null)
+						Console.WriteLine("Downloading SCM info for '{0}' environment...", environment.Key);
+
+						var response = client.DownloadString(url);
+
+						if (!string.IsNullOrWhiteSpace(response))
 						{
-							tmpGitUrls.Add(environment.Key, scmInfo.GitUrl);
+							var scmInfo = serializer.Deserialize<ScmInfo>(response);
 
-							var uri = new UriBuilder(scmInfo.GitUrl)
+							if (scmInfo != null)
 							{
-								UserName = usernameEscaped,
-								Password = password
-							};
-							var gitUrl = uri.Uri.ToString();
+								tmpGitUrls.Add(environment.Key, scmInfo.GitUrl);
 
-							if (environment.Key == "dev")
-							{
-								Console.WriteLine("Cloning Git repo for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
-								git(workingDirectory, "clone {0} {1}", gitUrl, ".");
+								var uri = new UriBuilder(scmInfo.GitUrl)
+								{
+									UserName = usernameEscaped,
+									Password = password
+								};
+								var gitUrl = uri.Uri.ToString();
 
-								Console.WriteLine("Swapping Git repo 'origin' with '{0}' remote", environment.Key);
-								git(workingDirectory, "remote rename {0} {1}", "origin", environment.Key);
+								if (environment.Key == "dev")
+								{
+									Console.WriteLine("Cloning Git repo for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
+									git(workingDirectory, "clone {0} {1}", gitUrl, ".");
 
-								success = true;
-								continue;
+									Console.WriteLine("Swapping Git repo 'origin' with '{0}' remote", environment.Key);
+									git(workingDirectory, "remote rename {0} {1}", "origin", environment.Key);
+
+									success = true;
+									continue;
+								}
+
+								Console.WriteLine("Adding Git repo remote for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
+								git(workingDirectory, "remote add {0} {1}", environment.Key, gitUrl);
 							}
-
-							Console.WriteLine("Adding Git repo remote for '{0}' environment:\r\n{1}", environment.Key, scmInfo.GitUrl);
-							git(workingDirectory, "remote add {0} {1}", environment.Key, gitUrl);
 						}
 					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine("\r\n==============================");
+					Console.WriteLine(ex.Message);
+					Console.WriteLine("==============================\r\n");
+					continue;
 				}
 
 				Console.WriteLine();
