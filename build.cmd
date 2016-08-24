@@ -1,5 +1,5 @@
 CALL src\.nuget\NuGet.exe restore src\UaasGitSetup.sln
-CALL "%WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe" build.proj
+CALL "%WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe" build\build.proj
 
 @IF %ERRORLEVEL% NEQ 0 GOTO err
 @exit /B 0
