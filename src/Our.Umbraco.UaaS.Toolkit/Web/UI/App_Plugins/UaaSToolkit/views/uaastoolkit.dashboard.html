@@ -1,0 +1,52 @@
+﻿<div class="wtd wtd--dashboard" ng-controller="UaaSToolkit.UaaSDashboardController">
+
+    <h3>UaaS Toolkit</h3>
+
+    <h4>Entity Lookup</h4>
+    <div>
+        <!-- TODO: [LK] Add description on what this look up is used for -->
+        <input type="text" class="umb-editor umb-dropdown" style="min-width: 50%;" placeholder="Enter the entity's GUID or ID" ng-model="entityId" no-dirty-check />
+        <button class="btn" ng-click="lookupEntity()">Find Entity</button>
+        <div ng-show="lookupResult && lookupResult == 'null'">
+            <p><br />No entity found with that GUID or ID.</p>
+        </div>
+        <div ng-show="lookupResult && lookupResult != 'null'">
+            <table class="table table-bordered table-condensed" style="margin-bottom: 0;">
+                <caption>&nbsp;</caption>
+                <tbody>
+                    <tr>
+                        <th style="width: 25%;">Entity ID</th>
+                        <td>
+                            <a href="{{lookupResult.editUrl}}">{{lookupResult.id}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Entity GUID</th>
+                        <td><input type="text" class="umb-editor" value="{{lookupResult.key}}" /></td>
+                    </tr>
+                    <tr>
+                        <th>Entity Name</th>
+                        <td>{{lookupResult.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Entity Type</th>
+                        <td>{{lookupResult.type}}</td>
+                    </tr>
+                    <tr>
+                        <th>Entity Path</th>
+                        <td>{{lookupResult.path}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <h4>UaaS Courier Maintenance</h4>
+    <!-- TODO: [LK] Add description on what actions these buttons perform -->
+    <div>
+        <button class="btn btn-warning" ng-click="forceDeploy()">Force Deploy</button>
+        <button class="btn btn-danger" ng-click="rebuild()">Rebuild</button>
+    </div>
+
+</div>
