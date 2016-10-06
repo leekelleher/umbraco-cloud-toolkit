@@ -1,6 +1,6 @@
-# Umbraco-as-a-Service Community Toolkit
+# Umbraco Cloud Community Toolkit
 
-The UaaS Toolkit is comprised of the following features...
+The Umbraco Cloud Toolkit is comprised of the following features...
 
 ##### Razor extension methods:
 
@@ -9,7 +9,7 @@ The UaaS Toolkit is comprised of the following features...
 * `@Umbraco.IsLive()`
 
 	
-##### Developer section: UaaS Dashboard
+##### Developer section: Umbraco Cloud Dashboard
 
 * Node Id -> Guid lookup
 * Node Guid -> Id lookup
@@ -34,7 +34,7 @@ The application will clone the Development environment, then add remote reposito
 ---
 
 ### References
-This version can be found at https://github.com/leekelleher/umbraco-uaas-toolkit
+This version can be found at https://github.com/leekelleher/umbraco-cloud-toolkit
 
 ### License
 Copyright &copy; 2014 Lee Kelleher, Umbrella Inc Ltd<br/>
