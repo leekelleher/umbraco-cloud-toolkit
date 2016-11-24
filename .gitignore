@@ -15,4 +15,3 @@ artifacts/
 src/packages/*/**
 build/App_Plugins/
 build/bin/
-assets/

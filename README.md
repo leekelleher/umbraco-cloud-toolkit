@@ -1,4 +1,4 @@
-# Umbraco Cloud Community Toolkit
+﻿# Umbraco Cloud Community Toolkit
 
 The Umbraco Cloud Toolkit is comprised of the following features...
 
@@ -19,7 +19,7 @@ The Umbraco Cloud Toolkit is comprised of the following features...
 
 ##### C# Helper methods
 
-* `EnvironmentHelper.GetUmbracoEnvironment()` returning `"local", "development", "staging", "live"` (or `"elsewhere"` if unknown).
+* `EnvironmentHelper.GetUmbracoEnvironment()` returning `"local"`, `"development"`, `"staging"`, `"live"` (or `"elsewhere"` if unknown).
 
 
 ##### Command-line utility
@@ -31,12 +31,18 @@ The application will clone the Development environment, then add remote reposito
 
 ---
 
-### References
+## License
 
-This version can be found at https://github.com/leekelleher/umbraco-cloud-toolkit
+Copyright &copy; 2016 Our Umbraco and [other contributors](https://github.com/leekelleher/umbraco-bulk-user-admin/graphs/contributors)
 
-### License
+Copyright &copy; 2014 Lee Kelleher, Umbrella Inc
 
-Copyright &copy; 2014 Lee Kelleher, Umbrella Inc Ltd
+Licensed under the [MIT License](LICENSE.md)
 
-This project is licensed under [MIT](http://opensource.org/licenses/MIT), please see [LICENSE](LICENSE.md) for further details.
+### Credits
+
+The package logo adapts the following icons from the [Noun Project](https://thenounproject.com), licensed under [CC BY 3.0 US](https://creativecommons.org/licenses/by/3.0/us/):
+
+- [Cloud](https://thenounproject.com/term/cloud/677923/) by [Aya Sofya](https://thenounproject.com/ayasofya/)
+- [Wrench](https://thenounproject.com/term/tools/688809/) by [Gregor Črešnar](https://thenounproject.com/grega.cresnar/)
+
