@@ -2,7 +2,7 @@
 
 The Umbraco Cloud Toolkit is comprised of the following features...
 
-##### Razor extension methods:
+##### Razor helper extension methods:
 
 * `@Umbraco.IsDevelopment()`
 * `@Umbraco.IsStaging()`
@@ -24,21 +24,19 @@ The Umbraco Cloud Toolkit is comprised of the following features...
 
 ##### Command-line utility
 
-A command-line utility to set-up a local git repository for an Umbraco-as-a-Service project.
+A command-line utility to set-up a local git repository for an Umbraco Cloud project.
 
 The application will clone the Development environment, then add remote repository references for the Staging and Live environments.
 
 
-    // compiles against Umbraco v7.2.8
-
 ---
 
 ### References
+
 This version can be found at https://github.com/leekelleher/umbraco-cloud-toolkit
 
 ### License
-Copyright &copy; 2014 Lee Kelleher, Umbrella Inc Ltd<br/>
 
-This project is licensed under [MIT](http://opensource.org/licenses/MIT).
+Copyright &copy; 2014 Lee Kelleher, Umbrella Inc Ltd
 
-Please see [LICENSE](LICENSE.md) for further details.
+This project is licensed under [MIT](http://opensource.org/licenses/MIT), please see [LICENSE](LICENSE.md) for further details.
