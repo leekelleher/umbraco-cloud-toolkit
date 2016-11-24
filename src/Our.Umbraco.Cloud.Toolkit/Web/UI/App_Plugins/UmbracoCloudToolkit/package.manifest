@@ -1,0 +1,9 @@
+{
+  javascript: [
+    '~/App_Plugins/UmbracoCloudToolkit/js/dashboard.controllers.js',
+    '~/App_Plugins/UmbracoCloudToolkit/js/dashboard.resources.js'
+  ],
+  "css" : [
+    '~/App_Plugins/UmbracoCloudToolkit/css/dashboard.css',
+  ]
+}

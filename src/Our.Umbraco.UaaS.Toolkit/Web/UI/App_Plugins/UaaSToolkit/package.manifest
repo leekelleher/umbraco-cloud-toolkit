@@ -1,9 +1,0 @@
-{
-	javascript: [
-		'~/App_Plugins/UaaSToolkit/js/uaastoolkit.controllers.js',
-		'~/App_Plugins/UaaSToolkit/js/uaastoolkit.resources.js'
-	],
-	"css" : [
-		'~/App_Plugins/UaaSToolkit/css/uaastoolkit.css',
-	]
-}
