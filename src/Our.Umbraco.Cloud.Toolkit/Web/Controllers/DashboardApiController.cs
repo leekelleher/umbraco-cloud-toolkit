@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web.Http;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
+using Umbraco.Core.Models;
 using Umbraco.Core.Models.EntityBase;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
@@ -18,6 +20,7 @@ namespace Our.Umbraco.Cloud.Toolkit
             IUmbracoEntity entity = null;
             Guid parsedGuid;
             int parsedId;
+            Uri parsedUri;
 
             if (Guid.TryParse(entityId, out parsedGuid))
             {
@@ -26,6 +29,29 @@ namespace Our.Umbraco.Cloud.Toolkit
             else if (int.TryParse(entityId, out parsedId))
             {
                 entity = Services.EntityService.Get(parsedId);
+            }
+            else if ((entityId.InvariantStartsWith("http") || entityId.StartsWith("/")) && Uri.TryCreate(entityId, UriKind.RelativeOrAbsolute, out parsedUri))
+            {
+                if (!parsedUri.IsAbsoluteUri)
+                {
+                    parsedUri = parsedUri.MakeAbsolute(Request.RequestUri);
+                }
+
+                // Check if media - assumption is only media paths would have a file extension
+                var path = parsedUri.GetAbsolutePathDecoded();
+                if (Path.HasExtension(path))
+                {
+                    entity = Services.MediaService.GetMediaByPath(path);
+                }
+                else
+                {
+                    // TODO: [LK:2017-07-06] Review if we need to check for the domain, and prefix the route with the domain's ID
+                    var content = UmbracoContext.ContentCache.GetByRoute(path);
+                    if (content != null)
+                    {
+                        entity = Services.EntityService.Get(content.Id);
+                    }
+                }
             }
 
             if (entity == null)
@@ -41,10 +67,14 @@ namespace Our.Umbraco.Cloud.Toolkit
                 Path = entity.Path.Split(',').Select(int.Parse).ToArray()
             };
 
-            var nodeType = entity.AdditionalData["NodeObjectType"];
-            if (nodeType != null)
+            // check if the entity has the "NodeObjectType" data, otherwise get it from the entity service
+            var nodeType = entity.AdditionalData.ContainsKey("NodeObjectType") && !string.IsNullOrWhiteSpace(entity.AdditionalData["NodeObjectType"].ToString())
+                ? entity.AdditionalData["NodeObjectType"].ToString()
+                : Services.EntityService.GetObjectType(entity).GetGuid().ToString();
+
+            if (!string.IsNullOrWhiteSpace(nodeType))
             {
-                switch (nodeType.ToString().ToUpper())
+                switch (nodeType.ToUpper())
                 {
                     case Constants.ObjectTypes.Document:
                         result.Type = "Content";
