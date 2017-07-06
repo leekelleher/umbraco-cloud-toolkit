@@ -17,7 +17,6 @@ deploy:
   # MyGet (Pegasus Web) Deployment for builds & releases
   - provider: NuGet
     server: https://www.myget.org/F/pegasus-web/
-    symbol_server: https://nuget.symbolsource.org/MyGet/pegasus-web
     api_key:
       secure: Q1/4K8VSwr7BjwmKDTef8y5lOc7S+jK9ELuWy67y6OVRpjxmnF9M3Gfs1kT+ir8x
     artifact: /.*\.nupkg/
@@ -27,7 +26,6 @@ deploy:
   # MyGet (Umbraco Community feed) Deployment for builds & releases
   - provider: NuGet
     server: https://www.myget.org/F/umbraco-packages/
-    symbol_server: https://nuget.symbolsource.org/MyGet/umbraco-packages
     api_key:
       secure: Q1/4K8VSwr7BjwmKDTef8y5lOc7S+jK9ELuWy67y6OVRpjxmnF9M3Gfs1kT+ir8x
     artifact: /.*\.nupkg/
