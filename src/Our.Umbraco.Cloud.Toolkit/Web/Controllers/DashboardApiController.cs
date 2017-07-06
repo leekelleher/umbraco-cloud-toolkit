@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using Umbraco.Core;
+using Umbraco.Core.Configuration;
 using Umbraco.Core.Models.EntityBase;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
@@ -52,7 +53,9 @@ namespace Our.Umbraco.Cloud.Toolkit
 
                     case Constants.ObjectTypes.DocumentType:
                         result.Type = "DocumentType";
-                        result.EditUrl = string.Format("#/settings/framed/%252Fumbraco%252Fsettings%252FeditNodeTypeNew.aspx%253Fid%253D{0}", entity.Id);
+                        result.EditUrl = UmbracoVersion.Current >= new Version(7, 4, 0)
+                            ? string.Format("#/settings/documentTypes/edit/{0}", entity.Id)
+                            : string.Format("#/settings/framed/%252Fumbraco%252Fsettings%252FeditNodeTypeNew.aspx%253Fid%253D{0}", entity.Id);
                         break;
 
                     case Constants.ObjectTypes.Template:
@@ -67,7 +70,9 @@ namespace Our.Umbraco.Cloud.Toolkit
 
                     case Constants.ObjectTypes.MediaType:
                         result.Type = "MediaType";
-                        result.EditUrl = string.Format("#/settings/framed/%252Fumbraco%252Fsettings%252FeditMediaType.aspx%253Fid%253D{0}", entity.Id);
+                        result.EditUrl = UmbracoVersion.Current >= new Version(7, 4, 0)
+                            ? string.Format("#/settings/mediaTypes/edit/{0}", entity.Id)
+                            : string.Format("#/settings/framed/%252Fumbraco%252Fsettings%252FeditMediaType.aspx%253Fid%253D{0}", entity.Id);
                         break;
 
                     case Constants.ObjectTypes.ContentItem:
@@ -85,7 +90,9 @@ namespace Our.Umbraco.Cloud.Toolkit
 
                     case Constants.ObjectTypes.MemberType:
                         result.Type = "MemberType";
-                        result.EditUrl = string.Format("#/member/framed/%252Fumbraco%252Fmembers%252FeditMemberType.aspx%253Fid%253D{0}", entity.Id);
+                        result.EditUrl = UmbracoVersion.Current >= new Version(7, 4, 0)
+                            ? string.Format("#/member/memberTypes/edit/{0}", entity.Id)
+                            : string.Format("#/member/framed/%252Fumbraco%252Fmembers%252FeditMemberType.aspx%253Fid%253D{0}", entity.Id);
                         break;
 
                     case Constants.ObjectTypes.MemberGroup:
@@ -100,7 +107,9 @@ namespace Our.Umbraco.Cloud.Toolkit
 
                     case Constants.ObjectTypes.DataType:
                         result.Type = "DataType";
-                        result.EditUrl = string.Format("#/developer/datatype/edit/{0}", entity.Id);
+                        result.EditUrl = UmbracoVersion.Current >= new Version(7, 4, 0)
+                            ? string.Format("#/developer/dataTypes/edit/{0}", entity.Id)
+                            : string.Format("#/developer/datatype/edit/{0}", entity.Id);
                         break;
 
                     case Constants.ObjectTypes.ContentRecycleBin:
