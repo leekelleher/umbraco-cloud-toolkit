@@ -10,6 +10,7 @@
         $scope.lookupResult = undefined;
         $scope.lookupNodeId = "";
         $scope.foundGuid = undefined;
+        $scope.searching = false;
 
         $scope.toggle = function (obj, prop) {
             obj[prop] = !obj[prop];
@@ -17,9 +18,13 @@
 
         $scope.lookupEntity = function () {
             $scope.lookupResult = undefined;
-            utdResources.lookupEntity($scope.entityId).then(function (data) {
-                $scope.lookupResult = data;
-            });
+            if ($scope.entityId) {
+                $scope.searching = true;
+                utdResources.lookupEntity($scope.entityId).then(function (data) {
+                    $scope.lookupResult = data;
+                    $scope.searching = false;
+                });
+            }
         }
 
         $scope.forceDeploy = function () {

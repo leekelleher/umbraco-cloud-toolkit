@@ -1,52 +1,131 @@
-﻿<div class="wtd wtd--dashboard" ng-controller="UmbracoCloudToolkit.DashboardController">
+﻿<div ng-controller="UmbracoCloudToolkit.DashboardController">
 
     <h3>Umbraco Cloud Toolkit</h3>
 
-    <h4>Entity Lookup</h4>
-    <div>
-        <!-- TODO: [LK] Add description on what this look up is used for -->
-        <input type="text" class="umb-editor umb-dropdown" style="min-width: 50%;" placeholder="Enter the entity's GUID or ID" ng-model="entityId" no-dirty-check />
-        <button class="btn" ng-click="lookupEntity()">Find Entity</button>
-        <div ng-show="lookupResult && lookupResult == 'null'">
-            <p><br />No entity found with that GUID or ID.</p>
+    <div class="umb-healthcheck-group__details">
+
+        <div class="umb-healthcheck-group__details-group-title">
+            <div class="umb-healthcheck-group__details-group-name">Finders</div>
         </div>
-        <div ng-show="lookupResult && lookupResult != 'null'">
-            <table class="table table-bordered table-condensed" style="margin-bottom: 0;">
-                <caption>&nbsp;</caption>
-                <tbody>
-                    <tr>
-                        <th style="width: 25%;">Entity ID</th>
-                        <td>
-                            <a href="{{lookupResult.editUrl}}">{{lookupResult.id}}</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Entity GUID</th>
-                        <td><input type="text" class="umb-editor" value="{{lookupResult.key}}" /></td>
-                    </tr>
-                    <tr>
-                        <th>Entity Name</th>
-                        <td>{{lookupResult.name}}</td>
-                    </tr>
-                    <tr>
-                        <th>Entity Type</th>
-                        <td>{{lookupResult.type}}</td>
-                    </tr>
-                    <tr>
-                        <th>Entity Path</th>
-                        <td>{{lookupResult.path}}</td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <div class="umb-healthcheck-group__details-checks">
+            <div class="umb-healthcheck-group__details-check">
+                <div class="umb-healthcheck-group__details-check-title">
+                    <div class="umb-healthcheck-group__details-check-name">Entity Finder</div>
+                </div>
+
+                <div class="umb-healthcheck-group__details-status">
+
+                    <div class="umb-healthcheck-group__details-status-content">
+                        <div class="umb-healthcheck-group__details-status-text">
+                            <p>Look up an Umbraco entity by its <strong>GUID</strong>, <strong>ID</strong> (integer) or <strong>URL</strong>, <em>yes even the URL of a media image</em>.</p>
+                        </div>
+
+                        <div class="umb-healthcheck-group__details-status-actions">
+
+                            <div class="umb-healthcheck-group__details-status-action">
+                                <input type="text" class="umb-editor" placeholder="Enter the entity's GUID, ID or URL" ng-model="entityId" no-dirty-check />
+                                <br />
+                                <button type="button" class="umb-era-button -blue" ng-click="lookupEntity()">
+                                    Find Entity
+                                </button>
+                            </div>
+
+                            <div ng-show="lookupResult && lookupResult == 'null'" class="umb-healthcheck-group__details-status-action">
+                                <p><strong>No entity found with that GUID, ID or URL.</strong></p>
+                            </div>
+                            <div ng-show="lookupResult && lookupResult != 'null'">
+                                <table class="table table-bordered table-condensed">
+                                    <caption>&nbsp;</caption>
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 25%;">Entity ID</th>
+                                            <td>
+                                                <a href="{{lookupResult.editUrl}}">{{lookupResult.id}}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entity GUID</th>
+                                            <td><input type="text" class="umb-editor" value="{{lookupResult.key}}" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entity Name</th>
+                                            <td>{{lookupResult.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entity Type</th>
+                                            <td>{{lookupResult.type}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entity Path</th>
+                                            <td>{{lookupResult.path}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-show="searching">
+                                <div class="umb-healthcheck-group__details-status-overlay"></div>
+                                <umb-load-indicator></umb-load-indicator>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
     </div>
 
+    <div class="umb-healthcheck-group__details">
 
-    <h4>UaaS Courier Maintenance</h4>
-    <!-- TODO: [LK] Add description on what actions these buttons perform -->
-    <div>
-        <button class="btn btn-warning" ng-click="forceDeploy()">Force Deploy</button>
-        <button class="btn btn-danger" ng-click="rebuild()">Rebuild</button>
+        <div class="umb-healthcheck-group__details-group-title">
+            <div class="umb-healthcheck-group__details-group-name">Maintenance</div>
+        </div>
+
+        <div class="umb-healthcheck-group__details-checks">
+            <div class="umb-healthcheck-group__details-check">
+                <div class="umb-healthcheck-group__details-check-title">
+                    <div class="umb-healthcheck-group__details-check-name">Umbraco Cloud Courier Maintenance</div>
+                    <div class="umb-healthcheck-group__details-check-description">Take caution when using these tools for Courier maintenance on Umbraco Cloud.</div>
+                </div>
+
+                <div class="umb-healthcheck-group__details-status">
+                    <div class="umb-healthcheck-group__details-status-content">
+                        <div class="umb-healthcheck-group__details-status-text">
+                            <p>Occasionally an environment deployment may not trigger a full Courier deployment. In these cases you may need to force Courier to do this.</p>
+                        </div>
+                        <div class="umb-healthcheck-group__details-status-actions">
+                            <div class="umb-healthcheck-group__details-status-action">
+                                <button type="button" class="umb-era-button -blue" ng-click="forceDeploy()">
+                                    Force Deploy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="umb-healthcheck-group__details-status">
+                    <div class="umb-healthcheck-group__details-status-content">
+                        <div class="umb-healthcheck-group__details-status-text">
+                            <p>In very rare cases you may find that your Courier schema files are out of sync with your Umbraco schema.</p>
+                            <p>This <strong>Full Rebuild</strong> tool will delete all of your existing Courier XML files and rebuild them from your Umbraco database.</p>
+                            <p><strong>Use with extreme caution!</strong></p>
+                        </div>
+                        <div class="umb-healthcheck-group__details-status-actions">
+                            <div class="umb-healthcheck-group__details-status-action">
+                                <button type="button" class="umb-era-button -red" ng-click="rebuild()">
+                                    Full Rebuild
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
 </div>
