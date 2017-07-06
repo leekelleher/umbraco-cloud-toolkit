@@ -101,13 +101,6 @@
     <Content Include="Web\UI\App_Plugins\UmbracoCloudToolkit\views\dashboard.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>IF NOT "$(SolutionDir)" == "*Undefined*" (
-XCOPY /s /y "$(TargetPath)" "C:\VCS\Umbrella\Carlsberg\carlsberg-cms\core\websites\pegasus-baseline\bin"
-XCOPY /s /y "$(TargetDir)$(ProjectName).pdb" "C:\VCS\Umbrella\Carlsberg\carlsberg-cms\core\websites\pegasus-baseline\bin"
-XCOPY /s /y "$(ProjectDir)Web\UI\*.*" "C:\VCS\Umbrella\Carlsberg\carlsberg-cms\core\websites\pegasus-baseline"
-)</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
