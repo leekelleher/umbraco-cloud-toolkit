@@ -43,9 +43,22 @@ namespace Our.Umbraco.Cloud.Toolkit
                 {
                     entity = Services.MediaService.GetMediaByPath(path);
                 }
+                // Otherwise assume that we're looking for content...
                 else
                 {
-                    // TODO: [LK:2017-07-06] Review if we need to check for the domain, and prefix the route with the domain's ID
+                    // Check if the hostname is assigned to a node
+                    var scheme = parsedUri.GetLeftPart(UriPartial.Scheme);
+                    var authority = parsedUri.GetLeftPart(UriPartial.Authority);
+                    var uriWithHost = parsedUri.AbsoluteUri.TrimStart(scheme);
+
+                    // TODO: [LK:2017-07-27] Update to use DomainService - if/when we upgrade minimum Umbraco dependency.
+                    var domain = umbraco.cms.businesslogic.web.Domain
+                        .GetDomains()
+                        .FirstOrDefault(x => uriWithHost.InvariantStartsWith(x.Name) || authority.InvariantStartsWith(x.Name));
+
+                    if (domain != null)
+                        path = string.Concat(domain.RootNodeId, path);
+
                     var content = UmbracoContext.ContentCache.GetByRoute(path);
                     if (content != null)
                     {
