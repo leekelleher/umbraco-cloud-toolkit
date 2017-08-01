@@ -56,10 +56,13 @@ namespace Our.Umbraco.Cloud.Toolkit
                         .GetDomains()
                         .FirstOrDefault(x => uriWithHost.InvariantStartsWith(x.Name) || authority.InvariantStartsWith(x.Name));
 
-                    if (domain != null)
-                        path = string.Concat(domain.RootNodeId, path);
+                    var route = domain != null
+                        ? domain.Name.InvariantEquals(uriWithHost)
+                            ? uriWithHost.Replace(domain.Name, domain.RootNodeId.ToString())
+                            : parsedUri.AbsoluteUri.Replace(domain.Name, domain.RootNodeId.ToString())
+                        : path;
 
-                    var content = UmbracoContext.ContentCache.GetByRoute(path);
+                    var content = UmbracoContext.ContentCache.GetByRoute(route);
                     if (content != null)
                     {
                         entity = Services.EntityService.Get(content.Id);
