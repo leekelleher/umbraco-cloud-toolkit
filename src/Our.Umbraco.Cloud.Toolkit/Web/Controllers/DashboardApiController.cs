@@ -51,7 +51,7 @@ namespace Our.Umbraco.Cloud.Toolkit
                     var authority = parsedUri.GetLeftPart(UriPartial.Authority);
                     var uriWithHost = parsedUri.AbsoluteUri.TrimStart(scheme);
 
-                    // TODO: [LK:2017-07-27] Update to use DomainService - if/when we upgrade minimum Umbraco dependency.
+                    // TODO: [LK:2017-07-27] Update to use DomainService - if/when we upgrade minimum Umbraco dependency, (to above 7.3.0)
                     var domain = umbraco.cms.businesslogic.web.Domain
                         .GetDomains()
                         .FirstOrDefault(x => uriWithHost.InvariantStartsWith(x.Name) || authority.InvariantStartsWith(x.Name));
