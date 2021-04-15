@@ -1,8 +1,6 @@
 ﻿# Umbraco Cloud Community Toolkit
 
-[![Build status](https://img.shields.io/appveyor/ci/leekelleher/umbraco-cloud-toolkit.svg)](https://ci.appveyor.com/project/leekelleher/umbraco-cloud-toolkit)
-[![NuGet release](https://img.shields.io/nuget/v/Our.Umbraco.Cloud.Toolkit.svg)](https://www.nuget.org/packages/Our.Umbraco.Cloud.Toolkit)
-[![Our Umbraco project page](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/backoffice-extensions/umbraco-cloud-toolkit)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 The Umbraco Cloud Toolkit is comprised of the following features...
 
